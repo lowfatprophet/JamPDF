@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "jampdf"
+version = "0.1.0"
+description = "A simple static site generator producing PDF files ready to be shared in an organized fashion."
+authors = ["Sebastian Grötzinger <lowfatprophet@googlemail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

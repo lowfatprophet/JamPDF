@@ -1,3 +1,5 @@
+import os
+
 import click
 import requests
 
@@ -31,6 +33,8 @@ def cli(metric: str, latitude: float, longitude: float) -> None:
             print("Metric not supported!")
     else:
         print("Open Meteo is down!")
+
+    print(os.listdir())
 
 
 if __name__ == "__main__":

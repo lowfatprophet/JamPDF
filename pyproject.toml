@@ -7,6 +7,17 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pyyaml = "^6.0.2"
+weasyprint = "^63.0"
+markdown = "^3.7"
+click = "^8.1.7"
+requests = "^2.32.3"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.3"
+
+[tool.poetry.scripts]
+jampdf = "jampdf.cli:cli"
 
 
 [build-system]

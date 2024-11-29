@@ -2,6 +2,7 @@ import json
 import os
 
 import click
+import tomllib
 import yaml
 
 from jampdf.custom_types import Config
@@ -14,6 +15,7 @@ def create_config(root="") -> Config:
         "name": None,
         "email": None,
         "combine_output": False,
+        "page_size": "DIN A4",
     }
     config["title"] = click.prompt(
         "Title", default=os.path.dirname(os.path.realpath(__file__)), show_default=False
@@ -33,11 +35,12 @@ def create_config(root="") -> Config:
 def read_config(config_file: str) -> Config | None:
     try:
         file_ext = config_file.split(".")[-1]
-        if file_ext == "yaml":
-            with open(config_file, "r") as file:
+        with open(config_file, "rb") as file:
+            if file_ext == "yaml":
                 return yaml.load(file, Loader=yaml.Loader)
-        elif file_ext == "json":
-            with open(config_file, "r") as file:
+            elif file_ext == "toml":
+                return tomllib.load(file)  # type: ignore
+            elif file_ext == "json":
                 return json.load(file)
     except FileNotFoundError:
         click.echo("Config file cannot be read.")

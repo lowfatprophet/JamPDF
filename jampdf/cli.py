@@ -1,13 +1,20 @@
 import os
 
 import click
+import tomllib
 
 from jampdf.config import create_config, read_config
+from jampdf.markdown import parse_input
+from jampdf.template import parse_template, template_env
 
 
-@click.group()
-def cli() -> None:
-    pass
+@click.group(invoke_without_command=True)
+@click.option("--version", "-v", is_flag=True, default=False, help="Show version.")
+def cli(version=False) -> None:
+    if version:
+        with open("pyproject.toml", "rb") as file:
+            config = tomllib.load(file)
+            click.echo(f"Version: {config['tool']['poetry']['version']}")
 
 
 @cli.command(help="Creates a new project directory in current directory.")
@@ -47,13 +54,33 @@ def init(config: str) -> None:
 
 
 @cli.command(help="Build project.")
-@click.option("--outdir", "-o", required=False)
+@click.option("--outdir", "-o", default="_dist", required=False)
 def build(outdir="_dist") -> None:
-    pass
+    input_files = os.walk(os.path.join("_content"))
+    env = template_env()
+
+    for dirpath, dirnames, filenames in input_files:
+        for file in filenames:
+            file_basename = ".".join(file.split(".")[:-1])
+            with open(os.path.join(dirpath, file), "r") as input_file:
+                text = input_file.read()
+                # data = parse_frontmatter(text)
+                data, content = parse_input(text)
+                data["content"] = content
+
+                html = parse_template(env, data)
+
+            if not html:
+                continue
+
+            with open(
+                os.path.join(outdir, f"{file_basename}.html"), "w+", encoding="utf-8"
+            ) as output_file:
+                output_file.write(html)
 
 
 def create_directories() -> None:
-    for dir in ["_content", "_templates"]:
+    for dir in ["_content", "_dist", "_templates"]:
         os.makedirs(os.path.join(dir))
 
 

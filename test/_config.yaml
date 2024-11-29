@@ -1,0 +1,7 @@
+combine_output: false
+description: "Hier probiere ich jetzt aus, wie das alles laufen wird, wenn ich jampdf\
+  \ build bem\xFChe."
+email: fitzgerald@condoman.net
+name: Fitzgerald
+page_size: DIN A4
+title: JamPDF Test

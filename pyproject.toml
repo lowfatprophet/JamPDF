@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jampdf"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple static site generator producing PDF files ready to be shared in an organized fashion."
 authors = ["Sebastian Grötzinger <lowfatprophet@googlemail.com>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pyyaml = "^6.0.2"
-weasyprint = "^68.0"
+weasyprint = "^70.0"
 markdown = "^3.7"
 click = "^8.1.7"
 jinja2 = "^3.1.4"
